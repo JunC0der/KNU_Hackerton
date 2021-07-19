@@ -1,0 +1,42 @@
+//member 테이블 생성 (고유번호, 로그인id, 로그인pw, 이름, 전공, 연락처, 이메일)
+create table member 
+ (
+  idx int primary key auto_increment,
+  log_id char(50),
+  log_pw char(50),
+  p_name char(20),
+  p_major char(30),
+  p_phone char(30),
+  p_email char(50)
+ );
+
+  //team 테이블 생성 (고유번호, 팀장(member의 idx외래키)  , 팀이름, 팀만료날짜  )
+create table team 
+ (
+  idx int primary key auto_increment,
+  host_idx int,
+  t_name char(50),
+  exp_date date,
+  
+  FOREIGN KEY (host_idx) references member(idx)
+ )
+
+ //team 과 member 과의 매칭 테이블(팀고유번호(외래키), 멤버고유번호(외래키))
+create table member_group
+ (
+  t_idx int,
+  m_idx int,
+  FOREIGN KEY (t_idx) references team(idx),
+  FOREIGN KEY (m_idx) references member(idx)
+ )
+
+//각 팀당 할당받은 과제 (팀고유번호(외래키), 업무이름 ...)
+create table sub_work 
+ (
+  t_idx int,
+  work_name char(100),
+  //추가예정
+  FOREIGN KEY (t_idx) references team(idx)
+ )
+
+
